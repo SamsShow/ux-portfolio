@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Navbar from '../components/Navbar'
+import useIsMobile from '../hooks/useIsMobile'
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -98,16 +99,17 @@ function FAQItem({ faq, index }) {
 
 export default function Contact() {
   const [selectedType, setSelectedType] = useState('Product Design')
+  const m = useIsMobile()
 
   return (
-    <div style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <div style={{ padding: m ? 16 : 32, display: 'flex', flexDirection: 'column', gap: 16 }}>
       <Navbar />
 
       {/* Row 1 — Header + Availability + Response */}
-      <div style={{ display: 'flex', gap: 16 }}>
+      <div style={{ display: 'flex', flexDirection: m ? 'column' : 'row', gap: 16 }}>
         <motion.div
           {...fadeUp}
-          style={{ ...card, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 48, flex: 1, height: 320 }}
+          style={{ ...card, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: m ? 24 : 48, flex: 1, height: m ? 'auto' : 320 }}
         >
           <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>GET IN TOUCH</span>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -115,7 +117,7 @@ export default function Contact() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: 52, color: '#FFFFFF', lineHeight: '58px', letterSpacing: '-0.02em', margin: 0 }}
+              style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: m ? 32 : 52, color: '#FFFFFF', lineHeight: m ? '38px' : '58px', letterSpacing: '-0.02em', margin: 0 }}
             >
               Have a project<br />in mind?
             </motion.h1>
@@ -125,7 +127,7 @@ export default function Contact() {
           </div>
         </motion.div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: 360, flexShrink: 0 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: m ? '100%' : 360, flexShrink: 0 }}>
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -152,7 +154,7 @@ export default function Contact() {
           >
             <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>RESPONSE TIME</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <span style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: 36, color: '#4A9EFF' }}>~2hrs</span>
+              <span style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: m ? 28 : 36, color: '#4A9EFF' }}>~2hrs</span>
               <span style={{ fontFamily: "'Inter'", fontWeight: 400, fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>Average email response time</span>
             </div>
           </motion.div>
@@ -160,14 +162,14 @@ export default function Contact() {
       </div>
 
       {/* Row 2 — Form + Email + Socials */}
-      <div style={{ display: 'flex', gap: 16 }}>
+      <div style={{ display: 'flex', flexDirection: m ? 'column' : 'row', gap: 16 }}>
         <motion.div
           {...fadeUp}
-          style={{ ...card, display: 'flex', flexDirection: 'column', gap: 24, padding: 36, flex: 1 }}
+          style={{ ...card, display: 'flex', flexDirection: 'column', gap: 24, padding: m ? 24 : 36, flex: 1 }}
         >
           <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>SEND A MESSAGE</span>
 
-          <div style={{ display: 'flex', gap: 12 }}>
+          <div style={{ display: 'flex', flexDirection: m ? 'column' : 'row', gap: 12 }}>
             <div style={{ flex: 1 }}>
               <label style={labelStyle}>Name</label>
               <input
@@ -192,7 +194,7 @@ export default function Contact() {
 
           <div>
             <label style={labelStyle}>Project type</label>
-            <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               {projectTypes.map((type) => (
                 <motion.button
                   key={type}
@@ -256,11 +258,11 @@ export default function Contact() {
         </motion.div>
 
         {/* Right column — Email + Socials */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: 380, flexShrink: 0 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: m ? '100%' : 380, flexShrink: 0 }}>
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.1 }}
-            style={{ ...card, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 28, height: 140 }}
+            style={{ ...card, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 28, height: m ? 'auto' : 140 }}
           >
             <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>EMAIL</span>
             <div>
@@ -307,10 +309,10 @@ export default function Contact() {
       </div>
 
       {/* Row 3 — FAQ + Location */}
-      <div style={{ display: 'flex', gap: 16 }}>
+      <div style={{ display: 'flex', flexDirection: m ? 'column' : 'row', gap: 16 }}>
         <motion.div
           {...fadeUp}
-          style={{ ...card, display: 'flex', flexDirection: 'column', gap: 20, padding: 36, flex: 1 }}
+          style={{ ...card, display: 'flex', flexDirection: 'column', gap: 20, padding: m ? 24 : 36, flex: 1 }}
         >
           <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>FREQUENTLY ASKED</span>
           <div>
@@ -323,7 +325,7 @@ export default function Contact() {
         <motion.div
           {...fadeUp}
           transition={{ duration: 0.5, delay: 0.1 }}
-          style={{ ...card, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 28, width: 380, flexShrink: 0 }}
+          style={{ ...card, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 28, width: m ? '100%' : 380, flexShrink: 0 }}
         >
           <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>LOCATION</span>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>

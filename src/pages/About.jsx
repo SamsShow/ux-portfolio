@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import useIsMobile from '../hooks/useIsMobile'
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -16,16 +17,18 @@ const card = {
 }
 
 export default function About() {
+  const m = useIsMobile()
+
   return (
-    <div style={{ padding: 32, display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <div style={{ padding: m ? 16 : 32, display: 'flex', flexDirection: 'column', gap: 16 }}>
       <Navbar />
 
       {/* Row 1 — Photo + Intro */}
-      <div style={{ display: 'flex', gap: 16 }}>
+      <div style={{ display: 'flex', flexDirection: m ? 'column' : 'row', gap: 16 }}>
         {/* Photo Card */}
         <motion.div
           {...fadeUp}
-          style={{ ...card, width: 420, height: 480, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}
+          style={{ ...card, width: m ? '100%' : 420, height: m ? 'auto' : 480, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', minHeight: m ? 360 : undefined }}
         >
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -33,7 +36,7 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.2 }}
             style={{ width: 280, height: 280, backgroundColor: '#1E1E1E', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
-            <span style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: 80, color: '#4A9EFF' }}>ST</span>
+            <span style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: m ? 50 : 80, color: '#4A9EFF' }}>ST</span>
           </motion.div>
           <div style={{ position: 'absolute', bottom: 28, left: 28, display: 'flex', flexDirection: 'column', gap: 4 }}>
             <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>BASED IN</span>
@@ -53,7 +56,7 @@ export default function About() {
         <motion.div
           {...fadeUp}
           transition={{ duration: 0.5, delay: 0.1 }}
-          style={{ ...card, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 40, flex: 1, height: 480 }}
+          style={{ ...card, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: m ? 24 : 40, flex: 1, height: m ? 'auto' : 480 }}
         >
           <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>ABOUT ME</span>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -61,7 +64,7 @@ export default function About() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: 40, color: '#FFFFFF', lineHeight: '48px', letterSpacing: '-0.02em', margin: 0 }}
+              style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: m ? 28 : 40, color: '#FFFFFF', lineHeight: m ? '36px' : '48px', letterSpacing: '-0.02em', margin: 0 }}
             >
               I design products<br />that people actually<br />want to use.
             </motion.h1>
@@ -69,7 +72,7 @@ export default function About() {
               I'm Saksham — a product designer with 4+ years of experience turning complex problems into simple, beautiful interfaces. I believe great design is invisible: it just works. Currently focused on building design systems and leading product design at scale.
             </p>
           </div>
-          <div style={{ display: 'flex', gap: 24 }}>
+          <div style={{ display: 'flex', gap: 24, flexWrap: m ? 'wrap' : 'nowrap' }}>
             {[
               { value: '4+', label: 'Years Experience', color: '#4A9EFF' },
               { value: '30+', label: 'Projects Shipped', color: '#06D6A0' },
@@ -83,10 +86,10 @@ export default function About() {
                   transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
                   style={{ display: 'flex', flexDirection: 'column', gap: 2 }}
                 >
-                  <span style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: 32, color: stat.color }}>{stat.value}</span>
+                  <span style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: m ? 24 : 32, color: stat.color }}>{stat.value}</span>
                   <span style={{ fontFamily: "'Inter'", fontWeight: 400, fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>{stat.label}</span>
                 </motion.div>
-                {i < 2 && <div style={{ width: 1, height: 40, backgroundColor: 'rgba(255,255,255,0.06)' }} />}
+                {i < 2 && !m && <div style={{ width: 1, height: 40, backgroundColor: 'rgba(255,255,255,0.06)' }} />}
               </div>
             ))}
           </div>
@@ -94,11 +97,11 @@ export default function About() {
       </div>
 
       {/* Row 2 — What I Do + Education + Philosophy */}
-      <div style={{ display: 'flex', gap: 16 }}>
+      <div style={{ display: 'flex', flexDirection: m ? 'column' : 'row', gap: 16 }}>
         {/* What I Do */}
         <motion.div
           {...fadeUp}
-          style={{ ...card, display: 'flex', flexDirection: 'column', gap: 20, padding: 32, flex: 1, height: 340 }}
+          style={{ ...card, display: 'flex', flexDirection: 'column', gap: 20, padding: m ? 24 : 32, flex: 1, height: m ? 'auto' : 340 }}
         >
           <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>WHAT I DO</span>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -128,11 +131,11 @@ export default function About() {
         </motion.div>
 
         {/* Right column — Education + Philosophy */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: 380, flexShrink: 0 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: m ? '100%' : 380, flexShrink: 0 }}>
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.1 }}
-            style={{ ...card, padding: 28, display: 'flex', flexDirection: 'column', gap: 16 }}
+            style={{ ...card, padding: m ? 24 : 28, display: 'flex', flexDirection: 'column', gap: 16 }}
           >
             <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>EDUCATION</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -151,7 +154,7 @@ export default function About() {
           <motion.div
             {...fadeUp}
             transition={{ duration: 0.5, delay: 0.2 }}
-            style={{ ...card, padding: 28, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}
+            style={{ ...card, padding: m ? 24 : 28, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}
           >
             <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>MY PHILOSOPHY</span>
             <span style={{ fontFamily: "'Instrument Serif'", fontStyle: 'italic', fontSize: 22, color: 'rgba(255,255,255,0.85)', lineHeight: '32px' }}>
@@ -162,10 +165,10 @@ export default function About() {
       </div>
 
       {/* Row 3 — Beyond Design + Currently */}
-      <div style={{ display: 'flex', gap: 16 }}>
+      <div style={{ display: 'flex', flexDirection: m ? 'column' : 'row', gap: 16 }}>
         <motion.div
           {...fadeUp}
-          style={{ ...card, display: 'flex', flexDirection: 'column', gap: 16, padding: 28, width: 440, flexShrink: 0, height: 260 }}
+          style={{ ...card, display: 'flex', flexDirection: 'column', gap: 16, padding: m ? 24 : 28, width: m ? '100%' : 440, flexShrink: 0, height: m ? 'auto' : 260 }}
         >
           <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>BEYOND DESIGN</span>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
@@ -192,7 +195,7 @@ export default function About() {
         <motion.div
           {...fadeUp}
           transition={{ duration: 0.5, delay: 0.1 }}
-          style={{ ...card, display: 'flex', flexDirection: 'column', gap: 16, padding: 28, flex: 1, height: 260 }}
+          style={{ ...card, display: 'flex', flexDirection: 'column', gap: 16, padding: m ? 24 : 28, flex: 1, height: m ? 'auto' : 260 }}
         >
           <span style={{ fontFamily: "'Inter'", fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>CURRENTLY</span>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flex: 1, justifyContent: 'center' }}>
@@ -225,17 +228,17 @@ export default function About() {
       {/* Row 4 — CTA */}
       <motion.div
         {...fadeUp}
-        style={{ ...card, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 40 }}
+        style={{ ...card, display: 'flex', flexDirection: m ? 'column' : 'row', alignItems: m ? 'flex-start' : 'center', justifyContent: 'space-between', padding: m ? 24 : 40, gap: m ? 20 : 0 }}
       >
         <div>
-          <span style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: 32, color: '#FFFFFF', lineHeight: '38px', display: 'block' }}>
+          <span style={{ fontFamily: "'Space Grotesk'", fontWeight: 700, fontSize: m ? 24 : 32, color: '#FFFFFF', lineHeight: m ? '30px' : '38px', display: 'block' }}>
             Let's build something<br />great together.
           </span>
           <span style={{ fontFamily: "'Inter'", fontWeight: 400, fontSize: 14, color: 'rgba(255,255,255,0.4)', marginTop: 8, display: 'block' }}>
             I'm always open to discussing new projects and creative ideas.
           </span>
         </div>
-        <div style={{ display: 'flex', gap: 12 }}>
+        <div style={{ display: 'flex', gap: 12, flexWrap: m ? 'wrap' : 'nowrap' }}>
           <motion.a
             href="mailto:saksham@tyagi.design"
             whileHover={{ scale: 1.05 }}
